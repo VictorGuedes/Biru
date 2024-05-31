@@ -1,5 +1,6 @@
 package com.oligue.app.biru.core.di
 
+import com.oligue.app.biru.core.BrewerieApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,13 +22,16 @@ class AppModule {
         .addInterceptor(loggingInterceptor)
         .build()
 
-    @Provides
-    @Singleton
+    @Provides @Singleton
     fun provideRetrofit(): Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
+
+    @Provides @Singleton
+    fun provideApi(retrofit: Retrofit) : BrewerieApi =
+        retrofit.create(BrewerieApi::class.java)
 
     companion object {
         private const val BASE_URL = "https://api.openbrewerydb.org/v1/"
