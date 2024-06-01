@@ -16,7 +16,7 @@ import javax.inject.Singleton
 class AppModule {
 
     private val loggingInterceptor = HttpLoggingInterceptor()
-        .setLevel(HttpLoggingInterceptor.Level.BASIC)
+        .setLevel(HttpLoggingInterceptor.Level.BODY)
 
     private val okHttpClient: OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
