@@ -1,11 +1,12 @@
 package com.oligue.app.biru.repository
 
+import androidx.lifecycle.LiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.oligue.app.biru.core.BrewerieApi
 import com.oligue.app.biru.core.model.Brewerie
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,15 +15,15 @@ class BrewerieRepository @Inject constructor(
     private val brewerieApi: BrewerieApi
 ) {
 
-    fun getBreweroes(): Flow<PagingData<Brewerie>>{
+    fun getBreweries(): LiveData<PagingData<Brewerie>>{
         return Pager(
             config = PagingConfig(
                 enablePlaceholders = false,
-                pageSize = 10
+                pageSize = 5
             ),
             pagingSourceFactory = {
                 BrewerieDataSource(brewerieApi)
             }
-        ).flow
+        ).liveData
     }
 }
