@@ -1,6 +1,5 @@
 package com.oligue.app.biru.app.main.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -9,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.oligue.app.biru.core.model.Brewerie
 import com.oligue.app.biru.databinding.BrewerieItemListBinding
 
-class BrewerieListAdapter :
+class BrewerieListAdapter(private val mapsAdapter: MapsAdapter) :
     PagingDataAdapter<Brewerie, BrewerieListAdapter.BrewerieViewHolder>(BrewerieDiffCallback()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BrewerieViewHolder {
@@ -21,19 +20,26 @@ class BrewerieListAdapter :
     }
     override fun onBindViewHolder(holder: BrewerieViewHolder, position: Int) {
         val data = getItem(position)
-        holder.bind(data)
+        holder.bind(data, position)
     }
 
 
     inner class BrewerieViewHolder(
         private val binding: BrewerieItemListBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Brewerie?){
+        fun bind(data: Brewerie?, position: Int){
             binding.let {
                 binding.city.text = data?.city
-                /*it.root.setOnClickListener{
-                }*/
+                if (position == 0) updateMap(data)
+
+                it.root.setOnClickListener{
+                    updateMap(data)
+                }
             }
+        }
+
+        private fun updateMap(data: Brewerie?){
+            mapsAdapter.onUpdateMaps(data)
         }
     }
 

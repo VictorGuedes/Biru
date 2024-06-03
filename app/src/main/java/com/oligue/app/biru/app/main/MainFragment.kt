@@ -42,7 +42,7 @@ class MainFragment : Fragment() {
             layoutManager = LinearLayoutManager(binding.recyclerView.context)
             setHasFixedSize(true)
         }
-        adapter = BrewerieListAdapter()
+        //adapter = BrewerieListAdapter()
         binding.recyclerView.adapter = adapter
     }
 
