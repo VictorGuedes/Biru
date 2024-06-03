@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.google.android.gms.maps.model.LatLng
 import com.oligue.app.biru.core.model.Brewerie
 import com.oligue.app.biru.repository.BrewerieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +18,7 @@ class MainViewModel @Inject constructor(
 ): ViewModel() {
 
     private val _brewerieList = MutableLiveData<PagingData<Brewerie>>()
+    private val brewerieHashMap = HashMap<LatLng, Brewerie?>()
 
     /*val brewerieList: LiveData<PagingData<Brewerie>>
         get() = _brewerieList*/
@@ -34,5 +36,9 @@ class MainViewModel @Inject constructor(
         return response
     }
 
+    fun putBrewerieHashMap(latLng: LatLng, data: Brewerie?){
+        brewerieHashMap[latLng] = data
+    }
 
+    fun getBrewerieDataFromHashMap(latLng: LatLng): Brewerie? = brewerieHashMap[latLng]
 }

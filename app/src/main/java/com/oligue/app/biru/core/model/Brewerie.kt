@@ -1,10 +1,12 @@
 package com.oligue.app.biru.core.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Brewerie(
     val id: String,
     val address_1: String,
-    val address_2: Any,
-    val address_3: Any,
     val brewery_type: String,
     val city: String,
     val country: String,
@@ -17,4 +19,4 @@ data class Brewerie(
     val state_province: String,
     val street: String,
     val website_url: String
-)
+): Parcelable

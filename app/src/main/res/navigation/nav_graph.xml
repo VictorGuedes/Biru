@@ -6,12 +6,21 @@
     app:startDestination="@id/mapsFragment">
 
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.oligue.app.biru.app.main.MainFragment"
-        android:label="MainFragment" />
-    <fragment
         android:id="@+id/mapsFragment"
         android:name="com.oligue.app.biru.app.main.MapsFragment"
         android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_mapsFragment_to_brewerieDetailsFragment"
+            app:destination="@id/brewerieDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/brewerieDetailsFragment"
+        android:name="com.oligue.app.biru.app.details.BrewerieDetailsFragment"
+        android:label="fragment_brewerie_details"
+        tools:layout="@layout/fragment_brewerie_details" >
+        <argument
+            android:name="BrewerieDetail"
+            app:argType="com.oligue.app.biru.core.model.Brewerie" />
+    </fragment>
 </navigation>

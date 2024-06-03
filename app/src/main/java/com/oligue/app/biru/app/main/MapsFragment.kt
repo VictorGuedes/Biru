@@ -8,14 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.snackbar.Snackbar
 
 import com.oligue.app.biru.R
 import com.oligue.app.biru.app.main.adapter.BrewerieListAdapter
@@ -66,16 +67,48 @@ class MapsFragment : Fragment(), MapsAdapter {
     }
 
     override fun onUpdateMaps(data: Brewerie?) {
-        val callback = OnMapReadyCallback { googleMap ->
-            val latitude = data?.latitude?.toDouble() ?: -34.0
-            val longitude = data?.longitude?.toDouble() ?: 151.0
+        val latitude = data?.latitude?.toDouble() ?: 0.0
+        val longitude = data?.longitude?.toDouble() ?: 0.0
 
-            val city = LatLng(latitude, longitude)
-            googleMap.addMarker(MarkerOptions().position(city).title(data?.name))
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(city))
+        if (latitude != 0.0 || longitude != 0.0){
+            val callback = OnMapReadyCallback { googleMap ->
+                val city = LatLng(latitude, longitude)
+                googleMap.addMarker(
+                    MarkerOptions()
+                        .position(city)
+                        .title(data?.name)
+                )
+                viewModel.putBrewerieHashMap(city,data)
+
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(city))
+                googleMap.animateCamera(CameraUpdateFactory.zoomTo(5f), 2000, null)
+
+
+                googleMap.setOnMarkerClickListener { marker ->
+                    val brewerie = viewModel.getBrewerieDataFromHashMap(marker.position)
+                    if (brewerie != null) {
+                        findNavController().navigate(
+                            MapsFragmentDirections.
+                            actionMapsFragmentToBrewerieDetailsFragment(
+                                brewerie
+                            )
+                        )
+                    }
+                    false
+                }
+
+            }
+
+            val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+            mapFragment?.getMapAsync(callback)
+
+            return
         }
 
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-        mapFragment?.getMapAsync(callback)
+        Snackbar.make(
+            binding.root,
+            resources.getString(R.string.Brewerie_not_found_text),
+            Snackbar.LENGTH_LONG
+        ).show()
     }
 }
