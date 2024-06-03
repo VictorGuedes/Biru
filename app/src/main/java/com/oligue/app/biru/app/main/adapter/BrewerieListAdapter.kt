@@ -29,7 +29,8 @@ class BrewerieListAdapter(private val mapsAdapter: MapsAdapter) :
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Brewerie?, position: Int){
             binding.let {
-                binding.city.text = data?.city
+                binding.brewerieName.text = data?.name
+                binding.brewerieCityState.text = "${data?.city} - ${data?.state}"
                 if (position == 0) updateMap(data)
 
                 it.root.setOnClickListener{

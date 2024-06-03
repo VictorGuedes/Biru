@@ -1,18 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:elevation="8dp">
 
-    <TextView
-        android:id="@+id/city"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="city"
-        android:textSize="20sp"
-        tools:ignore="MissingConstraints">
+        android:layout_margin="16dp"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toTopOf="parent">
 
-    </TextView>
+        <ImageView
+            android:id="@+id/brewerie_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintStart_toStartOf="parent">
+        </ImageView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/brewerie_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="2Kids Brewing Company"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            tools:ignore="MissingConstraints"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/brewerie_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/brewerie_city_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="2Kids Brewing Company"
+            android:textSize="16sp"
+            tools:ignore="MissingConstraints"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/brewerie_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/brewerie_name"
+            app:layout_constraintHorizontal_bias="0">
+        </TextView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/brewerie_city_state"
+            android:background="@color/black">
+
+        </View>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.cardview.widget.CardView>
