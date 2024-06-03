@@ -1,8 +1,11 @@
+import org.jetbrains.kotlin.konan.properties.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id ("dagger.hilt.android.plugin")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -39,6 +42,13 @@ android {
     viewBinding {
          enable = true
     }
+    buildFeatures {
+        viewBinding = true
+    }
+
+    secrets {
+        propertiesFileName = "keys.properties"
+    }
 }
 
 dependencies {
@@ -55,6 +65,7 @@ dependencies {
     //Hilt
     implementation("com.google.dagger:hilt-android:2.48")
     implementation("androidx.databinding:databinding-runtime:8.4.1")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
     kapt ("com.google.dagger:hilt-android-compiler:2.48")
 
     //Retrofit
