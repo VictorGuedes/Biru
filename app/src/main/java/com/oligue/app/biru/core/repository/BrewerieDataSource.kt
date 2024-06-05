@@ -1,4 +1,4 @@
-package com.oligue.app.biru.repository
+package com.oligue.app.biru.core.repository
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

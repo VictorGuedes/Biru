@@ -8,7 +8,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.google.android.gms.maps.model.LatLng
 import com.oligue.app.biru.core.model.Brewerie
-import com.oligue.app.biru.repository.BrewerieRepository
+import com.oligue.app.biru.core.repository.BrewerieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

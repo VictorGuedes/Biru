@@ -8,18 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 
 import com.oligue.app.biru.R
+import com.oligue.app.biru.utils.Utils
 import com.oligue.app.biru.app.main.adapter.BrewerieListAdapter
 import com.oligue.app.biru.app.main.adapter.MapsAdapter
 import com.oligue.app.biru.core.model.Brewerie
@@ -28,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MapsFragment : Fragment(), MapsAdapter {
+class MapsFragment : Fragment(), MapsAdapter, GoogleMap.OnMarkerClickListener {
 
     private val viewModel: MainViewModel by viewModels()
     private lateinit var adapter: BrewerieListAdapter
@@ -83,25 +85,11 @@ class MapsFragment : Fragment(), MapsAdapter {
                         .position(city)
                         .title(data?.name)
                 )
-                viewModel.putBrewerieHashMap(city,data)
+                viewModel.putBrewerieHashMap(city, data)
 
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(city))
                 googleMap.animateCamera(CameraUpdateFactory.zoomTo(5f), 2000, null)
-
-
-                googleMap.setOnMarkerClickListener { marker ->
-                    val brewerie = viewModel.getBrewerieDataFromHashMap(marker.position)
-                    if (brewerie != null) {
-                        findNavController().navigate(
-                            MapsFragmentDirections.
-                            actionMapsFragmentToBrewerieDetailsFragment(
-                                brewerie
-                            )
-                        )
-                    }
-                    false
-                }
-
+                googleMap.setOnMarkerClickListener(this)
             }
 
             val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
@@ -110,10 +98,25 @@ class MapsFragment : Fragment(), MapsAdapter {
             return
         }
 
-        Snackbar.make(
+        Utils.showSnackMessage(
             binding.root,
             resources.getString(R.string.Brewerie_not_found_text),
             Snackbar.LENGTH_LONG
-        ).show()
+        )
+    }
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+        val brewerie = viewModel.getBrewerieDataFromHashMap(marker.position)
+
+        if (brewerie != null) {
+            findNavController().navigate(
+                MapsFragmentDirections.
+                actionMapsFragmentToBrewerieDetailsFragment(
+                    brewerie
+                )
+            )
+        }
+
+        return false
     }
 }

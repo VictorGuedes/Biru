@@ -18,5 +18,5 @@ data class Brewerie(
     val state: String,
     val state_province: String,
     val street: String,
-    val website_url: String
+    val website_url: String?
 ): Parcelable

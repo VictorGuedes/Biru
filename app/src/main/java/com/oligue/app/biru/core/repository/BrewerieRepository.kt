@@ -1,4 +1,4 @@
-package com.oligue.app.biru.repository
+package com.oligue.app.biru.core.repository
 
 import androidx.lifecycle.LiveData
 import androidx.paging.Pager
