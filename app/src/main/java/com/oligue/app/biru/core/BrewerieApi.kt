@@ -12,4 +12,9 @@ interface BrewerieApi {
         @Query("per_page") perPage: Int
     ) : List<Brewerie>
 
+    @GET("breweries/search")
+    suspend fun getBreweriesBySearch(
+        @Query("query") query: String,
+    ) : List<Brewerie>
+
 }

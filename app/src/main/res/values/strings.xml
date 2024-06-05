@@ -10,4 +10,5 @@
     <string name="Brewerie_open_street_view_text">Open street view</string>
     <string name="Brewerie_open_site_text">Open website</string>
     <string name="Brewerie_not_found_url_text">Brewerie dont have website</string>
+    <string name="hint_text_field">Search here</string>
 </resources>

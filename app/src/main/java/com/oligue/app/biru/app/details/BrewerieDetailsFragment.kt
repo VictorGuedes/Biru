@@ -69,8 +69,7 @@ class BrewerieDetailsFragment : Fragment() {
         } else {
             Utils.showSnackMessage(
                 binding.root,
-                resources.getString(R.string.Brewerie_not_found_url_text),
-                Snackbar.LENGTH_LONG
+                resources.getString(R.string.Brewerie_not_found_url_text)
             )
         }
     }

@@ -26,4 +26,8 @@ class BrewerieRepository @Inject constructor(
             }
         ).liveData
     }
+
+    suspend fun getBreweriesBySeach(query: String): List<Brewerie>{
+        return brewerieApi.getBreweriesBySearch(query)
+    }
 }

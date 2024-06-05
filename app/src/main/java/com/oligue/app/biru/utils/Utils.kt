@@ -5,8 +5,8 @@ import com.google.android.material.snackbar.Snackbar
 
 object Utils {
 
-    fun showSnackMessage(view: View, text: CharSequence, duration: Int){
-        Snackbar.make(view, text, duration).show()
+    fun showSnackMessage(view: View, text: CharSequence){
+        Snackbar.make(view, text, Snackbar.LENGTH_LONG).show()
     }
 
 }

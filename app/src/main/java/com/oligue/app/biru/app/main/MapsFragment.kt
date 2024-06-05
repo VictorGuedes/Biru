@@ -3,12 +3,16 @@ package com.oligue.app.biru.app.main
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -48,12 +52,23 @@ class MapsFragment : Fragment(), MapsAdapter, GoogleMap.OnMarkerClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupUI()
+        setupAdapter()
+        setupViewModel()
+    }
+
+    private fun setupUI(){
         BottomSheetBehavior.from(binding.bottomSheet).apply {
             peekHeight = 200
             state = BottomSheetBehavior.STATE_COLLAPSED
         }
-        setupAdapter()
-        setupViewModel()
+
+        binding.inputSearchEditText.setOnEditorActionListener { textView, actionId, event ->
+            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                viewModel.getBreweriesBySearch(textView.text.toString())
+            }
+            false
+        }
     }
 
     private fun setupAdapter() {
@@ -70,6 +85,10 @@ class MapsFragment : Fragment(), MapsAdapter, GoogleMap.OnMarkerClickListener {
             viewModel.getBreweries().observe(viewLifecycleOwner) {
                 adapter.submitData(lifecycle, it)
             }
+        }
+
+        viewModel.brewerieSearh.observe(viewLifecycleOwner){
+            adapter.submitData(lifecycle, PagingData.from(it))
         }
     }
 
@@ -101,7 +120,6 @@ class MapsFragment : Fragment(), MapsAdapter, GoogleMap.OnMarkerClickListener {
         Utils.showSnackMessage(
             binding.root,
             resources.getString(R.string.Brewerie_not_found_text),
-            Snackbar.LENGTH_LONG
         )
     }
 

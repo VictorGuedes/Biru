@@ -12,8 +12,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toTopOf="@+id/recycler_view" />
-    
-    
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="@string/hint_text_field"
+        app:startIconDrawable="@drawable/baseline_search_24"
+        android:background="@color/white"
+        app:boxBackgroundMode="filled"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_search_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
     <FrameLayout
         android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
