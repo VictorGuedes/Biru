@@ -16,6 +16,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 
 import com.oligue.app.biru.R
@@ -45,6 +46,10 @@ class MapsFragment : Fragment(), MapsAdapter {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        BottomSheetBehavior.from(binding.bottomSheet).apply {
+            peekHeight = 200
+            state = BottomSheetBehavior.STATE_COLLAPSED
+        }
         setupAdapter()
         setupViewModel()
     }
