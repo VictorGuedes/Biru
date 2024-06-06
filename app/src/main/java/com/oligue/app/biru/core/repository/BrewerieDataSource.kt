@@ -2,7 +2,7 @@ package com.oligue.app.biru.core.repository
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.oligue.app.biru.core.BrewerieApi
+import com.oligue.app.biru.core.network.BrewerieApi
 import com.oligue.app.biru.core.model.Brewerie
 import retrofit2.HttpException
 import java.io.IOException

@@ -1,6 +1,6 @@
 package com.oligue.app.biru.core.di
 
-import com.oligue.app.biru.core.BrewerieApi
+import com.oligue.app.biru.core.network.BrewerieApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

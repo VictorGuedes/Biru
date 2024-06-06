@@ -59,7 +59,7 @@ class MapsFragment : Fragment(), MapsAdapter, GoogleMap.OnMarkerClickListener {
 
     private fun setupUI(){
         BottomSheetBehavior.from(binding.bottomSheet).apply {
-            peekHeight = 200
+            peekHeight = 300
             state = BottomSheetBehavior.STATE_COLLAPSED
         }
 

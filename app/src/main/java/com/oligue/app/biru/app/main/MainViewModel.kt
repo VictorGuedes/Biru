@@ -8,6 +8,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.google.android.gms.maps.model.LatLng
 import com.oligue.app.biru.core.model.Brewerie
+import com.oligue.app.biru.core.network.NetworkResult
 import com.oligue.app.biru.core.repository.BrewerieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -19,10 +20,11 @@ class MainViewModel @Inject constructor(
 ): ViewModel() {
 
     private val _brewerieList = MutableLiveData<PagingData<Brewerie>>()
-    private val brewerieHashMap = HashMap<LatLng, Brewerie?>()
 
     private val _brewerieSearh = MutableLiveData<List<Brewerie>>()
     val brewerieSearh: LiveData<List<Brewerie>> = _brewerieSearh
+
+    private val brewerieHashMap = HashMap<LatLng, Brewerie?>()
 
     fun getBreweries(): LiveData<PagingData<Brewerie>>{
         val response = repository.getBreweries().cachedIn(viewModelScope)
@@ -35,7 +37,15 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             val response = repository.getBreweriesBySeach(query)
 
-            _brewerieSearh.value = response
+            when(response){
+                is NetworkResult.Success -> {
+                    _brewerieSearh.value = response.data
+                }
+
+                is NetworkResult.Error -> {
+                    // show error message
+                }
+            }
         }
     }
 
