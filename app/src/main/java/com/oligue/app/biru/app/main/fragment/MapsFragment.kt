@@ -1,4 +1,4 @@
-package com.oligue.app.biru.app.main
+package com.oligue.app.biru.app.main.fragment
 
 import androidx.fragment.app.Fragment
 

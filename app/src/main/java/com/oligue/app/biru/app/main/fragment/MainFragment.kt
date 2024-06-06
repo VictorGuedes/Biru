@@ -1,4 +1,4 @@
-package com.oligue.app.biru.app.main
+package com.oligue.app.biru.app.main.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
