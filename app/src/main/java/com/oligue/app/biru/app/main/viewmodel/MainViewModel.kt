@@ -20,7 +20,7 @@ class MainViewModel @Inject constructor(
 ): BaseViewModel<ListBreweriesUiState>() {
 
     private val _brewerieList = MutableLiveData<PagingData<Brewerie>>()
-    private val brewerieHashMap = HashMap<LatLng, Brewerie?>()
+    private val brewerieHashMap = HashMap<LatLng, Brewerie>()
 
     private val _brewerieSearh = MutableLiveData<ListBreweriesUiState>()
     override val uiState: LiveData<ListBreweriesUiState>
@@ -54,7 +54,7 @@ class MainViewModel @Inject constructor(
     }
 
 
-    fun putBrewerieHashMap(latLng: LatLng, data: Brewerie?){
+    fun putBrewerieHashMap(latLng: LatLng, data: Brewerie){
         brewerieHashMap[latLng] = data
     }
 

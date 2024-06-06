@@ -20,17 +20,19 @@ class BrewerieListAdapter(private val mapsAdapter: MapsAdapter) :
     }
     override fun onBindViewHolder(holder: BrewerieViewHolder, position: Int) {
         val data = getItem(position)
-        holder.bind(data, position)
+        if(data != null) {
+            holder.bind(data, position)
+        }
     }
 
 
     inner class BrewerieViewHolder(
         private val binding: BrewerieItemListBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Brewerie?, position: Int){
+        fun bind(data: Brewerie, position: Int){
             binding.let {
-                binding.brewerieName.text = data?.name
-                binding.brewerieCityState.text = "${data?.city} - ${data?.state}"
+                binding.brewerieName.text = data.name
+                binding.brewerieCityState.text = "${data.city} - ${data.state}"
                 if (position == 0) updateMap(data)
 
                 it.root.setOnClickListener{
@@ -39,7 +41,7 @@ class BrewerieListAdapter(private val mapsAdapter: MapsAdapter) :
             }
         }
 
-        private fun updateMap(data: Brewerie?){
+        private fun updateMap(data: Brewerie){
             mapsAdapter.onUpdateMaps(data)
         }
     }

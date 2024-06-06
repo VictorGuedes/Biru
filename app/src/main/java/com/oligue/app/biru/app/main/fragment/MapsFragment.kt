@@ -101,9 +101,9 @@ class MapsFragment : Fragment(), MapsAdapter, GoogleMap.OnMarkerClickListener {
         }
     }
 
-    override fun onUpdateMaps(data: Brewerie?) {
-        val latitude = data?.latitude?.toDouble() ?: 0.0
-        val longitude = data?.longitude?.toDouble() ?: 0.0
+    override fun onUpdateMaps(data: Brewerie) {
+        val latitude = data.latitude.toDouble()
+        val longitude = data.longitude.toDouble()
 
         if (latitude != 0.0 || longitude != 0.0){
             val callback = OnMapReadyCallback { googleMap ->
@@ -111,7 +111,7 @@ class MapsFragment : Fragment(), MapsAdapter, GoogleMap.OnMarkerClickListener {
                 googleMap.addMarker(
                     MarkerOptions()
                         .position(city)
-                        .title(data?.name)
+                        .title(data.name)
                 )
                 viewModel.putBrewerieHashMap(city, data)
 
