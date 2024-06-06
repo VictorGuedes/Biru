@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -22,12 +21,13 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.snackbar.Snackbar
 
 import com.oligue.app.biru.R
 import com.oligue.app.biru.utils.Utils
 import com.oligue.app.biru.app.main.adapter.BrewerieListAdapter
 import com.oligue.app.biru.app.main.adapter.MapsAdapter
+import com.oligue.app.biru.app.main.viewmodel.MainViewModel
+import com.oligue.app.biru.app.main.viewmodel.ListBreweriesUiState
 import com.oligue.app.biru.core.model.Brewerie
 import com.oligue.app.biru.databinding.FragmentMapsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -87,8 +87,17 @@ class MapsFragment : Fragment(), MapsAdapter, GoogleMap.OnMarkerClickListener {
             }
         }
 
-        viewModel.brewerieSearh.observe(viewLifecycleOwner){
-            adapter.submitData(lifecycle, PagingData.from(it))
+        viewModel.uiState.observe(viewLifecycleOwner){ state ->
+            when(state){
+                is ListBreweriesUiState.Loading -> {
+                }
+                is ListBreweriesUiState.Success -> {
+                    adapter.submitData(lifecycle, PagingData.from(state.model))
+                }
+                is ListBreweriesUiState.Error -> {
+                    Utils.showSnackMessage(binding.root, state.errorMessage)
+                }
+            }
         }
     }
 

@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oligue.app.biru.app.main.adapter.BrewerieListAdapter
+import com.oligue.app.biru.app.main.viewmodel.MainViewModel
 import com.oligue.app.biru.databinding.MainFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

@@ -1,12 +1,12 @@
-package com.oligue.app.biru.app.main
+package com.oligue.app.biru.app.main.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.google.android.gms.maps.model.LatLng
+import com.oligue.app.biru.base.BaseViewModel
 import com.oligue.app.biru.core.model.Brewerie
 import com.oligue.app.biru.core.network.NetworkResult
 import com.oligue.app.biru.core.repository.BrewerieRepository
@@ -17,14 +17,14 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: BrewerieRepository
-): ViewModel() {
+): BaseViewModel<ListBreweriesUiState>() {
 
     private val _brewerieList = MutableLiveData<PagingData<Brewerie>>()
-
-    private val _brewerieSearh = MutableLiveData<List<Brewerie>>()
-    val brewerieSearh: LiveData<List<Brewerie>> = _brewerieSearh
-
     private val brewerieHashMap = HashMap<LatLng, Brewerie?>()
+
+    private val _brewerieSearh = MutableLiveData<ListBreweriesUiState>()
+    override val uiState: LiveData<ListBreweriesUiState>
+        get() = _brewerieSearh
 
     fun getBreweries(): LiveData<PagingData<Brewerie>>{
         val response = repository.getBreweries().cachedIn(viewModelScope)
@@ -39,11 +39,15 @@ class MainViewModel @Inject constructor(
 
             when(response){
                 is NetworkResult.Success -> {
-                    _brewerieSearh.value = response.data
+                    _brewerieSearh.value = ListBreweriesUiState.Success(
+                        response.data ?: emptyList()
+                    )
                 }
 
                 is NetworkResult.Error -> {
-                    // show error message
+                    _brewerieSearh.value = ListBreweriesUiState.Error(
+                        response.message ?: ""
+                    )
                 }
             }
         }
