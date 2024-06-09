@@ -5,11 +5,12 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.oligue.app.biru.app.main.model.BrewerieUI
 import com.oligue.app.biru.core.model.Brewerie
 import com.oligue.app.biru.databinding.BrewerieItemListBinding
 
 class BrewerieListAdapter(private val mapsAdapter: MapsAdapter) :
-    PagingDataAdapter<Brewerie, BrewerieListAdapter.BrewerieViewHolder>(BrewerieDiffCallback()){
+    PagingDataAdapter<BrewerieUI, BrewerieListAdapter.BrewerieViewHolder>(BrewerieDiffCallback()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BrewerieViewHolder {
         return BrewerieViewHolder(
@@ -29,7 +30,7 @@ class BrewerieListAdapter(private val mapsAdapter: MapsAdapter) :
     inner class BrewerieViewHolder(
         private val binding: BrewerieItemListBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Brewerie, position: Int){
+        fun bind(data: BrewerieUI, position: Int){
             binding.let {
                 binding.brewerieName.text = data.name
                 binding.brewerieCityState.text = "${data.city} - ${data.state}"
@@ -41,17 +42,17 @@ class BrewerieListAdapter(private val mapsAdapter: MapsAdapter) :
             }
         }
 
-        private fun updateMap(data: Brewerie){
+        private fun updateMap(data: BrewerieUI){
             mapsAdapter.onUpdateMaps(data)
         }
     }
 
-    private class BrewerieDiffCallback : DiffUtil.ItemCallback<Brewerie>() {
-        override fun areItemsTheSame(oldItem: Brewerie, newItem: Brewerie): Boolean {
+    private class BrewerieDiffCallback : DiffUtil.ItemCallback<BrewerieUI>() {
+        override fun areItemsTheSame(oldItem: BrewerieUI, newItem: BrewerieUI): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Brewerie, newItem: Brewerie): Boolean {
+        override fun areContentsTheSame(oldItem: BrewerieUI, newItem: BrewerieUI): Boolean {
             return oldItem == newItem
         }
     }

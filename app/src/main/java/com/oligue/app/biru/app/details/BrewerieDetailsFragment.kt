@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.snackbar.Snackbar
 import com.oligue.app.biru.R
 import com.oligue.app.biru.utils.Utils
 import com.oligue.app.biru.databinding.FragmentBrewerieDetailsBinding
@@ -55,7 +54,15 @@ class BrewerieDetailsFragment : Fragment() {
             openWebsite(brewerie.website_url)
         }
     }
-    private fun openMaps(latitude: String, longitude: String){
+    private fun openMaps(latitude: String?, longitude: String?){
+        if (latitude == null || longitude == null){
+            Utils.showSnackMessage(
+                binding.root,
+                resources.getString(R.string.Brewerie_not_found_text)
+            )
+            return
+        }
+
         val gmmIntentUri = Uri.parse("google.streetview:cbll=${latitude},${longitude}")
         val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
         mapIntent.setPackage("com.google.android.apps.maps")
