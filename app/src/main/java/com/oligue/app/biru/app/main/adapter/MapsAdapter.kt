@@ -1,8 +1,8 @@
 package com.oligue.app.biru.app.main.adapter
 
-import com.oligue.app.biru.core.model.Brewerie
+import com.oligue.app.biru.app.main.model.BrewerieUI
 
 interface MapsAdapter {
-    fun onUpdateMaps(data: Brewerie)
+    fun onUpdateMaps(data: BrewerieUI)
 
 }

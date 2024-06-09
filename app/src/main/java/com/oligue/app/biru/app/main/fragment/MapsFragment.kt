@@ -26,6 +26,7 @@ import com.oligue.app.biru.R
 import com.oligue.app.biru.utils.Utils
 import com.oligue.app.biru.app.main.adapter.BrewerieListAdapter
 import com.oligue.app.biru.app.main.adapter.MapsAdapter
+import com.oligue.app.biru.app.main.model.BrewerieUI
 import com.oligue.app.biru.app.main.viewmodel.MainViewModel
 import com.oligue.app.biru.app.main.viewmodel.ListBreweriesUiState
 import com.oligue.app.biru.core.model.Brewerie
@@ -101,9 +102,9 @@ class MapsFragment : Fragment(), MapsAdapter, GoogleMap.OnMarkerClickListener {
         }
     }
 
-    override fun onUpdateMaps(data: Brewerie) {
-        val latitude = data.latitude.toDouble()
-        val longitude = data.longitude.toDouble()
+    override fun onUpdateMaps(data: BrewerieUI) {
+        val latitude = data.latitude?.toDouble() ?: 0.0
+        val longitude = data.longitude?.toDouble() ?: 0.0
 
         if (latitude != 0.0 || longitude != 0.0){
             val callback = OnMapReadyCallback { googleMap ->
